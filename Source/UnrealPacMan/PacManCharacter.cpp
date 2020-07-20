@@ -30,5 +30,16 @@ void APacManCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	PlayerInputComponent->BindAxis(TEXT("MoveUp"), this, &APacManCharacter::MoveUp);
+	PlayerInputComponent->BindAxis(TEXT("MoveRight"), this, &APacManCharacter::MoveRight);
+
+}
+
+void APacManCharacter::MoveUp(float AxisValue) {
+	AddMovementInput(GetActorForwardVector() * AxisValue);
+}
+
+void APacManCharacter::MoveRight(float AxisValue) {
+	AddMovementInput(GetActorRightVector() * AxisValue);
 }
 
