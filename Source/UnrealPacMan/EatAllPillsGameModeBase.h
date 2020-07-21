@@ -19,5 +19,8 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class APill> PillClass;
+
+private:
+	void GameEnd(bool bIsWin);
 	
 };

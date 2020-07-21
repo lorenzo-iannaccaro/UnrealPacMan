@@ -19,5 +19,15 @@ void AEatAllPillsGameModeBase::PillEaten(APill* Pill) {
 	UE_LOG(LogTemp, Warning, TEXT("Remaining pills: %d"), PillArray.Num());
 	if (PillArray.Num() <= 0) {
 		UE_LOG(LogTemp, Warning, TEXT("All pills have been eaten"));
+		GameEnd(true);
+	}
+}
+
+void AEatAllPillsGameModeBase::GameEnd(bool bIsWin) {
+	for (AController* Controller : TActorRange<AController>(GetWorld()))
+	{
+		if (Controller->IsPlayerController() && bIsWin) {
+			Controller->GameHasEnded(Controller->GetPawn(), true);
+		}
 	}
 }

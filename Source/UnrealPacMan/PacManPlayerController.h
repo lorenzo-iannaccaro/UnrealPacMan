@@ -16,5 +16,16 @@ class UNREALPACMAN_API APacManPlayerController : public APlayerController
 
 public:
 	virtual void BeginPlay() override;
+
+	void GameHasEnded(class AActor* EndGameFocus = nullptr, bool bIsWinner = false) override;
+
+private:
+	UPROPERTY(EditAnywhere)
+	float LevelRestartDelay = 5.0f;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class UUserWidget> WinScreenClass;
+
+	FTimerHandle TimerHandle;
 	
 };
