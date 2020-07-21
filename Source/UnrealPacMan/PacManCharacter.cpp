@@ -2,6 +2,7 @@
 
 
 #include "PacManCharacter.h"
+#include "GhostCharacter.h"
 
 // Sets default values
 APacManCharacter::APacManCharacter()
@@ -9,12 +10,17 @@ APacManCharacter::APacManCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	PacmanMesh = CreateDefaultSubobject<UStaticMeshComponent>("Pacman Body");
+	PacmanMesh->SetupAttachment(GetRootComponent());
+
 }
 
 // Called when the game starts or when spawned
 void APacManCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	PacmanMesh->OnComponentBeginOverlap.AddDynamic(this, &APacManCharacter::PacManOverlapped);
 	
 }
 
@@ -42,6 +48,14 @@ void APacManCharacter::MoveUp(float AxisValue) {
 
 void APacManCharacter::MoveRight(float AxisValue) {
 	AddMovementInput(GetActorRightVector() * AxisValue);
+}
+
+void APacManCharacter::PacManOverlapped(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
+
+	AGhostCharacter* Ghost = Cast<AGhostCharacter>(OtherActor);
+	if (Ghost != nullptr) {
+		UE_LOG(LogTemp, Warning, TEXT("Ghost overlapped into Pacman"));
+	}
 }
 
 
