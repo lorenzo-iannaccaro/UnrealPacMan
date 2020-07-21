@@ -23,6 +23,7 @@ void APacManCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+
 }
 
 // Called to bind functionality to input
@@ -42,4 +43,5 @@ void APacManCharacter::MoveUp(float AxisValue) {
 void APacManCharacter::MoveRight(float AxisValue) {
 	AddMovementInput(GetActorRightVector() * AxisValue);
 }
+
 

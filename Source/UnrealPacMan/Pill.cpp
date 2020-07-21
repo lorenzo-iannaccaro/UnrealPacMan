@@ -3,6 +3,7 @@
 #include "Pill.h"
 #include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "PacManCharacter.h"
 
 // Sets default values
 APill::APill()
@@ -15,6 +16,8 @@ APill::APill()
 
 	PillMesh = CreateDefaultSubobject<UStaticMeshComponent>("Pill Body");
 	PillMesh->SetupAttachment(Root);
+
+	
 
 }
 
@@ -30,5 +33,17 @@ void APill::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	PillMesh->OnComponentBeginOverlap.AddDynamic(this, &APill::PillOverlapped);
+}
+
+void APill::PillOverlapped(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
+
+	UE_LOG(LogTemp, Warning, TEXT("Pill overlapped"));
+
+	APacManCharacter* PacmanPlayer = Cast<APacManCharacter>(OtherActor);
+	if (PacmanPlayer != nullptr)
+	{
+		Destroy();
+	}
 }
 
