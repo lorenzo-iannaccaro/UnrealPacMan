@@ -2,4 +2,8 @@
 
 
 #include "UnrealPacManGameModeBase.h"
+#include "Pill.h"
 
+void AUnrealPacManGameModeBase::PillEaten(APill* Pill) {
+
+}

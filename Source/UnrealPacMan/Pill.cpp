@@ -4,6 +4,7 @@
 #include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "PacManCharacter.h"
+#include "UnrealPacManGameModeBase.h"
 
 // Sets default values
 APill::APill()
@@ -43,7 +44,11 @@ void APill::PillOverlapped(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	APacManCharacter* PacmanPlayer = Cast<APacManCharacter>(OtherActor);
 	if (PacmanPlayer != nullptr)
 	{
-		Destroy();
+		AUnrealPacManGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AUnrealPacManGameModeBase>();
+		if (GameMode != nullptr) {
+			GameMode->PillEaten(this);
+		}
+
 	}
 }
 

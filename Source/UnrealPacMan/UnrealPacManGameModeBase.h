@@ -14,4 +14,6 @@ class UNREALPACMAN_API AUnrealPacManGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+public:
+	virtual void PillEaten(class APill* Pill);
 };
