@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "GhostCharacter.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 AGhostCharacter::AGhostCharacter()
@@ -14,6 +15,14 @@ AGhostCharacter::AGhostCharacter()
 void AGhostCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UCharacterMovementComponent* MovementComponent = Cast<UCharacterMovementComponent>(GetMovementComponent());
+	if (MovementComponent != nullptr) {
+		MovementComponent->MaxWalkSpeed = MaxGhostSpeed;
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("Cannot set max speed on %s"), *GetName());
+	}
 	
 }
 

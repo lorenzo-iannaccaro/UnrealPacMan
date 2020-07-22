@@ -27,6 +27,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
+	UPROPERTY(EditDefaultsOnly)
+	float MaxGhostSpeed = 300.0f;
 	
 
 };
