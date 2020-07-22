@@ -20,6 +20,6 @@ void AGhostAIController::Tick(float DeltaTime) {
 
 	if (PlayerPawn != nullptr) {
 		//UE_LOG(LogTemp, Warning, TEXT("Player pawn found"));
-		MoveToActor(PlayerPawn, 0);
+		MoveToActor(PlayerPawn, 0, false);
 	}
 }
