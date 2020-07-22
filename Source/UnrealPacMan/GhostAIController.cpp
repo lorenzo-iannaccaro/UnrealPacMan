@@ -3,11 +3,18 @@
 
 #include "GhostAIController.h"
 #include "Kismet/GameplayStatics.h"
+#include "NavigationSystem.h"
+#include "GhostCharacter.h"
 
 void AGhostAIController::BeginPlay() {
 	Super::BeginPlay();
 
 	StartLocation = GetPawn()->GetActorLocation();
+
+	ControlledGhost = Cast<AGhostCharacter>(GetPawn());
+	if (ControlledGhost == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("Cannot possess Ghost"));
+	}
 
 	PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 	if (PlayerPawn != nullptr) {
@@ -18,8 +25,23 @@ void AGhostAIController::BeginPlay() {
 void AGhostAIController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
-	if (PlayerPawn != nullptr) {
+	if (PlayerPawn != nullptr && ControlledGhost != nullptr) {
 		//UE_LOG(LogTemp, Warning, TEXT("Player pawn found"));
-		MoveToActor(PlayerPawn, 0, false);
+		//MoveToActor(PlayerPawn, 0, false);
+
+		if (ControlledGhost->IsVulnerable()) {
+			MoveToLocation(StartLocation);
+		}
+		else {
+			MoveToActor(PlayerPawn, 0, false);
+		}
 	}
+}
+
+void AGhostAIController::RandomMove() {
+
+	//FNavLocation RandomDestination;
+	
+	//UNavigationSystem* Nav = UNavigationSystem::GetCurrent(GetWorld());
+	//bool bOk = GetRandomReachablePointInRadius(PlayerPawn->GetActorLocation(), 500, RandomDestination);
 }

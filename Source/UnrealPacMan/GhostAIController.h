@@ -17,11 +17,15 @@ class UNREALPACMAN_API AGhostAIController : public AAIController
 public:
 	virtual void Tick(float DeltaTime) override;
 
+	void RandomMove();
+
 protected:
 	virtual void BeginPlay() override;
 
 private:
 	APawn* PlayerPawn = nullptr;
+
+	class AGhostCharacter* ControlledGhost = nullptr;
 
 	FVector StartLocation;
 };

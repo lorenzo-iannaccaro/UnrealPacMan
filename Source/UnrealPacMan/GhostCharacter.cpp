@@ -23,6 +23,8 @@ void AGhostCharacter::BeginPlay()
 	else {
 		UE_LOG(LogTemp, Error, TEXT("Cannot set max speed on %s"), *GetName());
 	}
+
+	bIsVulnerable = false;
 	
 }
 
@@ -38,5 +40,13 @@ void AGhostCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AGhostCharacter::SetVulnerability(bool bValue) {
+	bIsVulnerable = bValue;
+}
+
+bool AGhostCharacter::IsVulnerable() {
+	return bIsVulnerable;
 }
 

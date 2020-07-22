@@ -22,8 +22,17 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class APill> PillClass;
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class AGhostCharacter> GhostClass;
+
 private:
 
 	void GameEnd(bool bIsWin);
+
+	void WeakenGhosts();
+
+	void StrenghtenGhosts();
+
+	FTimerHandle TimerHandle;
 	
 };

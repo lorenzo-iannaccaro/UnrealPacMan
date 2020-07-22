@@ -6,6 +6,9 @@
 #include "Pill.h"
 #include "PowerPill.h"
 #include "EngineUtils.h"
+#include "GhostCharacter.h"
+#include "Engine/World.h"
+#include "TimerManager.h"
 
 void AEatAllPillsGameModeBase::PillEaten(APill* Pill) {
 	UE_LOG(LogTemp, Warning, TEXT("Game mode knows that a pill has been eaten"));
@@ -13,7 +16,11 @@ void AEatAllPillsGameModeBase::PillEaten(APill* Pill) {
 	// TODO: controllare se la pillola è speciale
 	APowerPill* PillExamined = Cast<APowerPill>(Pill);
 	if (PillExamined != nullptr) {
-		// TODO: implementare effetti della pillola speciale
+		UE_LOG(LogTemp, Warning, TEXT("POWER PILL EATEN"));
+		// TODO: implementare effetti della pillola speciale - settare timer - ripristinare effetti a timer finito
+		WeakenGhosts();
+		GetWorldTimerManager().SetTimer(TimerHandle, this, &AEatAllPillsGameModeBase::StrenghtenGhosts, 10.0f, false);
+		
 	}
 
 	Pill->Destroy();
@@ -45,5 +52,33 @@ void AEatAllPillsGameModeBase::GameEnd(bool bIsWin) {
 void AEatAllPillsGameModeBase::PacmanPermadeath() {
 
 	GameEnd(false);
+
+}
+
+void AEatAllPillsGameModeBase::WeakenGhosts() {
+	TArray<AActor*> GhostsArray;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), GhostClass, GhostsArray);
+
+	for (AActor* Actor : GhostsArray)
+	{
+		AGhostCharacter* Ghost = Cast<AGhostCharacter>(Actor);
+		if (Ghost != nullptr) {
+			Ghost->SetVulnerability(true);
+		}
+	}
+
+}
+
+void AEatAllPillsGameModeBase::StrenghtenGhosts() {
+	TArray<AActor*> GhostsArray;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), GhostClass, GhostsArray);
+
+	for (AActor* Actor : GhostsArray)
+	{
+		AGhostCharacter* Ghost = Cast<AGhostCharacter>(Actor);
+		if (Ghost != nullptr) {
+			Ghost->SetVulnerability(false);
+		}
+	}
 
 }

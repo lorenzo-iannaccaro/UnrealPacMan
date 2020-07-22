@@ -26,9 +26,15 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void SetVulnerability(bool bValue);
+
+	bool IsVulnerable();
+
 private:
 	UPROPERTY(EditDefaultsOnly)
 	float MaxGhostSpeed = 300.0f;
+
+	bool bIsVulnerable;
 	
 
 };
