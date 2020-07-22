@@ -30,11 +30,24 @@ public:
 
 	bool IsVulnerable();
 
+	void ChangeColor();
+
 private:
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* GhostMesh;
+
 	UPROPERTY(EditDefaultsOnly)
 	float MaxGhostSpeed = 300.0f;
 
 	bool bIsVulnerable;
+
+	UPROPERTY(EditAnywhere)
+	class UMaterial* GhostMaterial;
+
+	UPROPERTY(EditDefaultsOnly)
+	FVector WeakColor = FVector(1, 1, 1);
+
+	class UMaterialInstanceDynamic* WeakGhostMaterial;
 	
 
 };

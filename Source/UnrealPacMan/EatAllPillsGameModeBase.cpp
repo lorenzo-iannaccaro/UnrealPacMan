@@ -64,6 +64,7 @@ void AEatAllPillsGameModeBase::WeakenGhosts() {
 		AGhostCharacter* Ghost = Cast<AGhostCharacter>(Actor);
 		if (Ghost != nullptr) {
 			Ghost->SetVulnerability(true);
+			Ghost->ChangeColor();
 		}
 	}
 
@@ -78,6 +79,7 @@ void AEatAllPillsGameModeBase::StrenghtenGhosts() {
 		AGhostCharacter* Ghost = Cast<AGhostCharacter>(Actor);
 		if (Ghost != nullptr) {
 			Ghost->SetVulnerability(false);
+			Ghost->ChangeColor();
 		}
 	}
 

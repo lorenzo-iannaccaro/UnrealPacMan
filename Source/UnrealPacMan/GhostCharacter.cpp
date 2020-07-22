@@ -2,12 +2,17 @@
 
 #include "GhostCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Materials/MaterialInstanceDynamic.h"
+#include "Materials/MaterialInterface.h"
 
 // Sets default values
 AGhostCharacter::AGhostCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	GhostMesh = CreateDefaultSubobject<UStaticMeshComponent>("Ghost Body");
+	GhostMesh->SetupAttachment(GetRootComponent());
 
 }
 
@@ -25,6 +30,10 @@ void AGhostCharacter::BeginPlay()
 	}
 
 	bIsVulnerable = false;
+
+	// Color
+	WeakGhostMaterial = UMaterialInstanceDynamic::Create(GhostMesh->GetMaterial(0), NULL);
+	WeakGhostMaterial->SetVectorParameterValue(TEXT("Color"), WeakColor);
 	
 }
 
@@ -48,5 +57,14 @@ void AGhostCharacter::SetVulnerability(bool bValue) {
 
 bool AGhostCharacter::IsVulnerable() {
 	return bIsVulnerable;
+}
+
+void AGhostCharacter::ChangeColor() {
+	if (IsVulnerable()) {
+		GhostMesh->SetMaterial(0, WeakGhostMaterial);
+	}
+	else {
+		GhostMesh->SetMaterial(0, GhostMaterial);
+	}
 }
 
