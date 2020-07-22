@@ -4,10 +4,17 @@
 #include "EatAllPillsGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "Pill.h"
+#include "PowerPill.h"
 #include "EngineUtils.h"
 
 void AEatAllPillsGameModeBase::PillEaten(APill* Pill) {
 	UE_LOG(LogTemp, Warning, TEXT("Game mode knows that a pill has been eaten"));
+
+	// TODO: controllare se la pillola è speciale
+	APowerPill* PillExamined = Cast<APowerPill>(Pill);
+	if (PillExamined != nullptr) {
+		// TODO: implementare effetti della pillola speciale
+	}
 
 	Pill->Destroy();
 
