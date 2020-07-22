@@ -17,10 +17,13 @@ class UNREALPACMAN_API AEatAllPillsGameModeBase : public AUnrealPacManGameModeBa
 public:
 	virtual void PillEaten(APill* Pill) override;
 
+	void PacmanPermadeath();
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class APill> PillClass;
 
 private:
+
 	void GameEnd(bool bIsWin);
 	
 };

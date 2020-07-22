@@ -6,6 +6,8 @@
 
 void APacManPlayerController::BeginPlay() {
 	Super::BeginPlay();
+
+	StartLocation = GetPawn()->GetActorLocation();
 }
 
 void APacManPlayerController::GameHasEnded(class AActor* EndGameFocus, bool bIsWinner) {
@@ -17,7 +19,17 @@ void APacManPlayerController::GameHasEnded(class AActor* EndGameFocus, bool bIsW
 			WinScreenWidget->AddToViewport();
 		}
 	}
+	else {
+		UUserWidget* LoseScreenWidget = CreateWidget(this, LoseScreenClass);
+		if (LoseScreenWidget != nullptr) {
+			LoseScreenWidget->AddToViewport();
+		}
+	}
 
 	GetWorldTimerManager().SetTimer(TimerHandle, this, &APlayerController::RestartLevel, LevelRestartDelay);
+}
+
+void APacManPlayerController::ReturnToStartLocation() {
+	GetPawn()->SetActorLocation(StartLocation);
 }
 

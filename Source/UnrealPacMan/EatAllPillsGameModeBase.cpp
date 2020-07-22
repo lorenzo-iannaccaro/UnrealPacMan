@@ -29,5 +29,14 @@ void AEatAllPillsGameModeBase::GameEnd(bool bIsWin) {
 		if (Controller->IsPlayerController() && bIsWin) {
 			Controller->GameHasEnded(Controller->GetPawn(), true);
 		}
+		else if (Controller->IsPlayerController() && !bIsWin) {
+			Controller->GameHasEnded(Controller->GetPawn(), false);
+		}
 	}
+}
+
+void AEatAllPillsGameModeBase::PacmanPermadeath() {
+
+	GameEnd(false);
+
 }

@@ -17,6 +17,8 @@ class UNREALPACMAN_API APacManPlayerController : public APlayerController
 public:
 	virtual void BeginPlay() override;
 
+	void ReturnToStartLocation();
+
 	void GameHasEnded(class AActor* EndGameFocus = nullptr, bool bIsWinner = false) override;
 
 private:
@@ -26,6 +28,11 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UUserWidget> WinScreenClass;
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class UUserWidget> LoseScreenClass;
+
 	FTimerHandle TimerHandle;
+
+	FVector StartLocation;
 	
 };

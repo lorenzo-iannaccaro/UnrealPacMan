@@ -3,6 +3,8 @@
 
 #include "PacManCharacter.h"
 #include "GhostCharacter.h"
+#include "EatAllPillsGameModeBase.h"
+#include "PacManPlayerController.h"
 
 // Sets default values
 APacManCharacter::APacManCharacter()
@@ -19,6 +21,13 @@ APacManCharacter::APacManCharacter()
 void APacManCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	PacmanController = Cast<APacManPlayerController>(GetController());
+	if (PacmanController == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("Cannot find pacman controller"));
+	}
+
+	CurrentLives = MaxLives;
 
 	PacmanMesh->OnComponentBeginOverlap.AddDynamic(this, &APacManCharacter::PacManOverlapped);
 	
@@ -55,7 +64,30 @@ void APacManCharacter::PacManOverlapped(UPrimitiveComponent* OverlappedComponent
 	AGhostCharacter* Ghost = Cast<AGhostCharacter>(OtherActor);
 	if (Ghost != nullptr) {
 		UE_LOG(LogTemp, Warning, TEXT("Ghost overlapped into Pacman"));
+
+		LoseALife();
 	}
 }
 
+void APacManCharacter::LoseALife() {
+	CurrentLives--;
+	PacmanController->ReturnToStartLocation();
 
+	if (NoLivesRemain()) {
+		UE_LOG(LogTemp, Warning, TEXT("Pacman has lost all lives"));
+
+		// TODO: inserire detachment e deathcamera
+
+		AEatAllPillsGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AEatAllPillsGameModeBase>();
+		if (GameMode != nullptr) {
+			GameMode->PacmanPermadeath();
+		}
+		else {
+			UE_LOG(LogTemp, Error, TEXT("Gamemode not found"));
+		}
+	}
+}
+
+bool APacManCharacter::NoLivesRemain() {
+	return CurrentLives <= 0;
+}

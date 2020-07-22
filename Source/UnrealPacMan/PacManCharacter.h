@@ -15,25 +15,35 @@ public:
 	// Sets default values for this character's properties
 	APacManCharacter();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 private:
+	UPROPERTY(EditDefaultsOnly)
+	int MaxLives = 3;
+
+	UPROPERTY(VisibleAnywhere)
+	int CurrentLives;
+
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* PacmanMesh;
+
+	class APacManPlayerController* PacmanController;
 
 	void MoveUp(float AxisValue);
 
 	void MoveRight(float AxisValue);
 
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* PacmanMesh;
+	void LoseALife();
+
+	bool NoLivesRemain();
 
 	UFUNCTION()
 	void PacManOverlapped(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
