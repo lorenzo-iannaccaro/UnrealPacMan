@@ -50,3 +50,9 @@ void AGhostAIController::RandomMove() {
 void AGhostAIController::ReturnToStartLocation() {
 	ControlledGhost->SetActorLocation(StartLocation);
 }
+
+void AGhostAIController::GameHasEnded(class AActor* EndGameFocus, bool bIsWinner) {
+	Super::GameHasEnded(EndGameFocus, bIsWinner);
+
+	GetPawn()->DetachFromControllerPendingDestroy();
+}

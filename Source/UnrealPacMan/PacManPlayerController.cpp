@@ -26,6 +26,8 @@ void APacManPlayerController::GameHasEnded(class AActor* EndGameFocus, bool bIsW
 		}
 	}
 
+	//GetPawn()->DetachFromControllerPendingDestroy();
+
 	GetWorldTimerManager().SetTimer(TimerHandle, this, &APlayerController::RestartLevel, LevelRestartDelay);
 }
 

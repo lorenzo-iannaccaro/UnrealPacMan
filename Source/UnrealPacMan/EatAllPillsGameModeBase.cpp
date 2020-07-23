@@ -67,6 +67,15 @@ void AEatAllPillsGameModeBase::GameEnd(bool bIsWin) {
 		else if (Controller->IsPlayerController() && !bIsWin) {
 			Controller->GameHasEnded(GameCamera, false);
 		}
+		else {
+			// Every controller that is not the player's
+			Controller->GameHasEnded(GameCamera, false);
+		}
+
+		/*APawn* ControlledActor = Controller->GetPawn();
+		if (ControlledActor != nullptr) {
+			ControlledActor->DetachFromControllerPendingDestroy();
+		}*/
 	}
 }
 

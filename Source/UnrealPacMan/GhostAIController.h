@@ -21,6 +21,8 @@ public:
 
 	void RandomMove();
 
+	void GameHasEnded(class AActor* EndGameFocus = nullptr, bool bIsWinner = false) override;
+
 protected:
 	virtual void BeginPlay() override;
 
