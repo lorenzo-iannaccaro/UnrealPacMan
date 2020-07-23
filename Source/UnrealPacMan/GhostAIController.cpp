@@ -57,3 +57,7 @@ void AGhostAIController::GameHasEnded(class AActor* EndGameFocus, bool bIsWinner
 	GetPawn()->SetActorEnableCollision(false);
 	GetPawn()->DetachFromControllerPendingDestroy();
 }
+
+FVector AGhostAIController::GetStartLocation() {
+	return StartLocation;
+}

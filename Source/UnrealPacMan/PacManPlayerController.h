@@ -23,7 +23,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere)
-	float LevelRestartDelay = 5.0f;
+	float LevelRestartDelay = 3.0f;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UUserWidget> WinScreenClass;

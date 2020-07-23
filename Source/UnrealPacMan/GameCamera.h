@@ -19,4 +19,12 @@ public:
 	
 protected:
 	virtual void BeginPlay() override;
+
+private:
+	UPROPERTY(EditDefaultsOnly)
+	FVector CameraLocation = FVector(0, 0, 2400);
+
+	UPROPERTY(EditDefaultsOnly)
+	FRotator CameraRotation = FRotator(-90, 180, 180);
+
 };

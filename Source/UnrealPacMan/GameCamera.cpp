@@ -8,6 +8,6 @@ AGameCamera::AGameCamera() {
 }
 
 void AGameCamera::BeginPlay() {
-	SetActorLocation(FVector(0, 0, 2400));
-	SetActorRotation(FQuat(FRotator(-90, 180, 180)));
+	SetActorLocation(CameraLocation);
+	SetActorRotation(FQuat(CameraRotation));
 }

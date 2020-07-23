@@ -18,6 +18,8 @@ public:
 
 	void PacmanPermadeath();
 
+	void AllGhostsToBase();
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class APill> PillClass;
 
@@ -37,6 +39,11 @@ private:
 	FTimerHandle TimerHandle;
 
 	AGameCamera* GameCamera;
+
+	TArray<AActor*> GhostsArray;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class AGhostCharacter> GhostClass;
 
 	void GameEnd(bool bIsWin);
 

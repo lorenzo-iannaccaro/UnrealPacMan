@@ -17,6 +17,8 @@ class UNREALPACMAN_API AGhostAIController : public AAIController
 public:
 	virtual void Tick(float DeltaTime) override;
 
+	FVector GetStartLocation();
+
 	void ReturnToStartLocation();
 
 	void RandomMove();

@@ -17,6 +17,8 @@ void AEatAllPillsGameModeBase::BeginPlay() {
 	Super::BeginPlay();
 
 	SetPacmanGameCamera();
+
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), GhostClass, GhostsArray);
 }
 
 void AEatAllPillsGameModeBase::SetPacmanGameCamera()
@@ -82,36 +84,38 @@ void AEatAllPillsGameModeBase::PacmanPermadeath() {
 
 void AEatAllPillsGameModeBase::WeakenGhosts() {
 
-	UWorld* GameWorld = GetWorld();
-	if (GameWorld != nullptr) {
-		for (AGhostAIController* GhostController : TActorRange<AGhostAIController>(GetWorld())) {
-			if (GhostController != nullptr) {
-				AGhostCharacter* Ghost = Cast<AGhostCharacter>(GhostController->GetPawn());
-				if (Ghost != nullptr) {
-					Ghost->SetVulnerability(true);
-					Ghost->ChangeColor();
-				}
-
-			}
+	for (AActor* Actor : GhostsArray)
+	{
+		AGhostCharacter* Ghost = Cast<AGhostCharacter>(Actor);
+		if (Ghost != nullptr) {
+			Ghost->SetVulnerability(true);
+			Ghost->ChangeColor();
 		}
 	}
 
 }
 
 void AEatAllPillsGameModeBase::StrenghtenGhosts() {
-
-	UWorld* GameWorld = GetWorld();
-	if (GameWorld != nullptr) {
-		for (AGhostAIController* GhostController : TActorRange<AGhostAIController>(GetWorld())) {
-			if (GhostController != nullptr) {
-				AGhostCharacter* Ghost = Cast<AGhostCharacter>(GhostController->GetPawn());
-				if (Ghost != nullptr) {
-					Ghost->SetVulnerability(false);
-					Ghost->ChangeColor();
-				}
-
-			}
+	for (AActor* Actor : GhostsArray)
+	{
+		AGhostCharacter* Ghost = Cast<AGhostCharacter>(Actor);
+		if (Ghost != nullptr) {
+			Ghost->SetVulnerability(false);
+			Ghost->ChangeColor();
 		}
 	}
 	
+}
+
+void AEatAllPillsGameModeBase::AllGhostsToBase() {
+	for (AActor* Actor : GhostsArray)
+	{
+		AGhostCharacter* Ghost = Cast<AGhostCharacter>(Actor);
+		if (Ghost != nullptr) {
+			AGhostAIController* GhostController = Cast<AGhostAIController>(Ghost->GetController());
+			if (GhostController != nullptr) {
+				Ghost->SetActorLocation(GhostController->GetStartLocation());
+			}
+		}
+	}
 }

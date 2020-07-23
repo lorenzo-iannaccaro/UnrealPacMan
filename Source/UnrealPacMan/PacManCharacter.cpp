@@ -84,15 +84,15 @@ void APacManCharacter::PacManOverlapped(UPrimitiveComponent* OverlappedComponent
 }
 
 void APacManCharacter::LoseALife() {
+	AEatAllPillsGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AEatAllPillsGameModeBase>();
+
 	CurrentLives--;
 	PacmanController->ReturnToStartLocation();
+	GameMode->AllGhostsToBase();
 
 	if (NoLivesRemain()) {
 		UE_LOG(LogTemp, Warning, TEXT("Pacman has lost all lives"));
 
-		// TODO: inserire detachment e deathcamera
-
-		AEatAllPillsGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AEatAllPillsGameModeBase>();
 		if (GameMode != nullptr) {
 			GameMode->PacmanPermadeath();
 		}
