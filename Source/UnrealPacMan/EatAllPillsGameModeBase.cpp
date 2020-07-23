@@ -7,6 +7,7 @@
 #include "PowerPill.h"
 #include "EngineUtils.h"
 #include "GhostCharacter.h"
+#include "GhostAIController.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
 #include "Camera/CameraActor.h"
@@ -40,7 +41,7 @@ void AEatAllPillsGameModeBase::PillEaten(APill* Pill) {
 		UE_LOG(LogTemp, Warning, TEXT("POWER PILL EATEN"));
 		// Effetti della pillola speciale - settare timer - ripristinare effetti a timer finito
 		WeakenGhosts();
-		GetWorldTimerManager().SetTimer(TimerHandle, this, &AEatAllPillsGameModeBase::StrenghtenGhosts, 10.0f, false);
+		GetWorldTimerManager().SetTimer(TimerHandle, this, &AEatAllPillsGameModeBase::StrenghtenGhosts, PowerPillEffectDurationInSeconds, false);
 		
 	}
 
@@ -81,10 +82,17 @@ void AEatAllPillsGameModeBase::PacmanPermadeath() {
 
 void AEatAllPillsGameModeBase::WeakenGhosts() {
 
-	for (AGhostCharacter* Ghost : TActorRange<AGhostCharacter>(GetWorld())) {
-		if (Ghost != nullptr) {
-			Ghost->SetVulnerability(true);
-			Ghost->ChangeColor();
+	UWorld* GameWorld = GetWorld();
+	if (GameWorld != nullptr) {
+		for (AGhostAIController* GhostController : TActorRange<AGhostAIController>(GetWorld())) {
+			if (GhostController != nullptr) {
+				AGhostCharacter* Ghost = Cast<AGhostCharacter>(GhostController->GetPawn());
+				if (Ghost != nullptr) {
+					Ghost->SetVulnerability(true);
+					Ghost->ChangeColor();
+				}
+
+			}
 		}
 	}
 
@@ -92,11 +100,18 @@ void AEatAllPillsGameModeBase::WeakenGhosts() {
 
 void AEatAllPillsGameModeBase::StrenghtenGhosts() {
 
-	for (AGhostCharacter* Ghost : TActorRange<AGhostCharacter>(GetWorld())) {
-		if (Ghost != nullptr) {
-			Ghost->SetVulnerability(false);
-			Ghost->ChangeColor();
+	UWorld* GameWorld = GetWorld();
+	if (GameWorld != nullptr) {
+		for (AGhostAIController* GhostController : TActorRange<AGhostAIController>(GetWorld())) {
+			if (GhostController != nullptr) {
+				AGhostCharacter* Ghost = Cast<AGhostCharacter>(GhostController->GetPawn());
+				if (Ghost != nullptr) {
+					Ghost->SetVulnerability(false);
+					Ghost->ChangeColor();
+				}
+
+			}
 		}
 	}
-
+	
 }

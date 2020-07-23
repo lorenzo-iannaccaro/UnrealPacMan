@@ -31,14 +31,17 @@ protected:
 
 private:
 
+	UPROPERTY(EditDefaultsOnly)
+	float PowerPillEffectDurationInSeconds = 10.0f;
+
+	FTimerHandle TimerHandle;
+
+	AGameCamera* GameCamera;
+
 	void GameEnd(bool bIsWin);
 
 	void WeakenGhosts();
 
 	void StrenghtenGhosts();
-
-	FTimerHandle TimerHandle;
-
-	AGameCamera* GameCamera;
 	
 };
