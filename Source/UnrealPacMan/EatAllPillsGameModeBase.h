@@ -22,9 +22,6 @@ public:
 	TSubclassOf<class APill> PillClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class AGhostCharacter> GhostClass;
-
-	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AGameCamera> GameCameraClass;
 
 protected:

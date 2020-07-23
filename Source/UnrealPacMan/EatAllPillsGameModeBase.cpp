@@ -34,11 +34,11 @@ void AEatAllPillsGameModeBase::SetPacmanGameCamera()
 void AEatAllPillsGameModeBase::PillEaten(APill* Pill) {
 	UE_LOG(LogTemp, Warning, TEXT("Game mode knows that a pill has been eaten"));
 
-	// TODO: controllare se la pillola è speciale
+	// Controllare se la pillola è speciale
 	APowerPill* PillExamined = Cast<APowerPill>(Pill);
 	if (PillExamined != nullptr) {
 		UE_LOG(LogTemp, Warning, TEXT("POWER PILL EATEN"));
-		// TODO: implementare effetti della pillola speciale - settare timer - ripristinare effetti a timer finito
+		// Effetti della pillola speciale - settare timer - ripristinare effetti a timer finito
 		WeakenGhosts();
 		GetWorldTimerManager().SetTimer(TimerHandle, this, &AEatAllPillsGameModeBase::StrenghtenGhosts, 10.0f, false);
 		
@@ -48,8 +48,6 @@ void AEatAllPillsGameModeBase::PillEaten(APill* Pill) {
 
 	TArray<AActor*> PillArray;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), PillClass, PillArray);
-
-	//TActorRange<APill>(GetWorld());
 
 	UE_LOG(LogTemp, Warning, TEXT("Remaining pills: %d"), PillArray.Num());
 	if (PillArray.Num() <= 0) {
@@ -72,10 +70,6 @@ void AEatAllPillsGameModeBase::GameEnd(bool bIsWin) {
 			Controller->GameHasEnded(GameCamera, false);
 		}
 
-		/*APawn* ControlledActor = Controller->GetPawn();
-		if (ControlledActor != nullptr) {
-			ControlledActor->DetachFromControllerPendingDestroy();
-		}*/
 	}
 }
 
@@ -86,12 +80,8 @@ void AEatAllPillsGameModeBase::PacmanPermadeath() {
 }
 
 void AEatAllPillsGameModeBase::WeakenGhosts() {
-	TArray<AActor*> GhostsArray;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), GhostClass, GhostsArray);
 
-	for (AActor* Actor : GhostsArray)
-	{
-		AGhostCharacter* Ghost = Cast<AGhostCharacter>(Actor);
+	for (AGhostCharacter* Ghost : TActorRange<AGhostCharacter>(GetWorld())) {
 		if (Ghost != nullptr) {
 			Ghost->SetVulnerability(true);
 			Ghost->ChangeColor();
@@ -101,12 +91,8 @@ void AEatAllPillsGameModeBase::WeakenGhosts() {
 }
 
 void AEatAllPillsGameModeBase::StrenghtenGhosts() {
-	TArray<AActor*> GhostsArray;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), GhostClass, GhostsArray);
 
-	for (AActor* Actor : GhostsArray)
-	{
-		AGhostCharacter* Ghost = Cast<AGhostCharacter>(Actor);
+	for (AGhostCharacter* Ghost : TActorRange<AGhostCharacter>(GetWorld())) {
 		if (Ghost != nullptr) {
 			Ghost->SetVulnerability(false);
 			Ghost->ChangeColor();
