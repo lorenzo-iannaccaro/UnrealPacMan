@@ -54,5 +54,6 @@ void AGhostAIController::ReturnToStartLocation() {
 void AGhostAIController::GameHasEnded(class AActor* EndGameFocus, bool bIsWinner) {
 	Super::GameHasEnded(EndGameFocus, bIsWinner);
 
+	GetPawn()->SetActorEnableCollision(false);
 	GetPawn()->DetachFromControllerPendingDestroy();
 }
