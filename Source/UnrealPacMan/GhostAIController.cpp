@@ -9,10 +9,11 @@
 void AGhostAIController::BeginPlay() {
 	Super::BeginPlay();
 
-	StartLocation = GetPawn()->GetActorLocation();
-
 	ControlledGhost = Cast<AGhostCharacter>(GetPawn());
-	if (ControlledGhost == nullptr) {
+	if (ControlledGhost != nullptr) {
+		StartLocation = ControlledGhost->GetActorLocation();
+	}
+	else {
 		UE_LOG(LogTemp, Error, TEXT("Cannot possess Ghost"));
 	}
 
@@ -44,4 +45,8 @@ void AGhostAIController::RandomMove() {
 	
 	//UNavigationSystem* Nav = UNavigationSystem::GetCurrent(GetWorld());
 	//bool bOk = GetRandomReachablePointInRadius(PlayerPawn->GetActorLocation(), 500, RandomDestination);
+}
+
+void AGhostAIController::ReturnToStartLocation() {
+	ControlledGhost->SetActorLocation(StartLocation);
 }

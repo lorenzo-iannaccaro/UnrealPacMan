@@ -5,6 +5,7 @@
 #include "GhostCharacter.h"
 #include "EatAllPillsGameModeBase.h"
 #include "PacManPlayerController.h"
+#include "GhostAIController.h"
 
 // Sets default values
 APacManCharacter::APacManCharacter()
@@ -64,8 +65,21 @@ void APacManCharacter::PacManOverlapped(UPrimitiveComponent* OverlappedComponent
 	AGhostCharacter* Ghost = Cast<AGhostCharacter>(OtherActor);
 	if (Ghost != nullptr) {
 		UE_LOG(LogTemp, Warning, TEXT("Ghost overlapped into Pacman"));
-
-		LoseALife();
+		if (Ghost->IsVulnerable()) {
+			AGhostAIController* GhostController = Cast<AGhostAIController>(Ghost->GetController());
+			if (GhostController != nullptr) {
+				GhostController->ReturnToStartLocation();
+			}
+			else {
+				UE_LOG(LogTemp, Error, TEXT("Ghost controller is nullptr"));
+			}
+		}
+		else {
+			LoseALife();
+		}
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("Ghost overlapped into Pacman is nullptr"));
 	}
 }
 
