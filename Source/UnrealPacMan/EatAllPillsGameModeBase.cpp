@@ -80,12 +80,24 @@ void AEatAllPillsGameModeBase::PacmanPermadeath() {
 
 void AEatAllPillsGameModeBase::WeakenGhosts() {
 
-	for (AActor* Actor : GhostsArray)
+	/*for (AActor* Actor : GhostsArray)
 	{
-		AGhostCharacter* Ghost = Cast<AGhostCharacter>(Actor);
-		if (Ghost != nullptr) {
-			Ghost->SetVulnerability(true);
-			Ghost->ChangeColor();
+		if (Actor != nullptr) {
+			AGhostCharacter* Ghost = Cast<AGhostCharacter>(Actor);
+			if (Ghost != nullptr) {
+				Ghost->SetVulnerability(true);
+				Ghost->ChangeColor();
+			}
+		}
+	}*/
+
+	for (int i = 0; i < GhostsArray.Num(); i++) {
+		if (GhostsArray[i] != nullptr) {
+			AGhostCharacter* Ghost = Cast<AGhostCharacter>(GhostsArray[i]);
+			if (Ghost != nullptr) {
+				Ghost->SetVulnerability(true);
+				Ghost->ChangeColor();
+			}
 		}
 	}
 
@@ -94,11 +106,14 @@ void AEatAllPillsGameModeBase::WeakenGhosts() {
 void AEatAllPillsGameModeBase::StrenghtenGhosts() {
 	for (AActor* Actor : GhostsArray)
 	{
-		AGhostCharacter* Ghost = Cast<AGhostCharacter>(Actor);
-		if (Ghost != nullptr) {
-			Ghost->SetVulnerability(false);
-			Ghost->ChangeColor();
+		if (Actor != nullptr) {
+			AGhostCharacter* Ghost = Cast<AGhostCharacter>(Actor);
+			if (Ghost != nullptr) {
+				Ghost->SetVulnerability(false);
+				Ghost->ChangeColor();
+			}
 		}
+		
 	}
 	
 }
