@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "NavigationSystem.h"
 #include "GhostCharacter.h"
+#include "BehaviorTree/BehaviorTree.h"
 
 void AGhostAIController::BeginPlay() {
 	Super::BeginPlay();
@@ -21,20 +22,28 @@ void AGhostAIController::BeginPlay() {
 	if (PlayerPawn != nullptr) {
 		SetFocus(PlayerPawn);
 	}
+
 }
 
 void AGhostAIController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
 	if (PlayerPawn != nullptr && ControlledGhost != nullptr) {
-		//UE_LOG(LogTemp, Warning, TEXT("Player pawn found"));
-		//MoveToActor(PlayerPawn, 0, false);
 
-		if (ControlledGhost->IsVulnerable()) {
+		/*if (ControlledGhost->IsVulnerable()) {
 			MoveToLocation(StartLocation);
 		}
 		else {
 			MoveToActor(PlayerPawn, 0, false);
+		}*/
+		if (ControlledGhost->IsVulnerable()) {
+			BrainComponent->StopLogic(TEXT(""));
+			MoveToLocation(StartLocation);
+		}
+		else {
+			if (BehaviorTree != nullptr) {
+				RunBehaviorTree(BehaviorTree);
+			}
 		}
 	}
 }
@@ -48,6 +57,7 @@ void AGhostAIController::RandomMove() {
 }
 
 void AGhostAIController::ReturnToStartLocation() {
+	BrainComponent->StopLogic(TEXT(""));
 	ControlledGhost->SetActorLocation(StartLocation);
 }
 

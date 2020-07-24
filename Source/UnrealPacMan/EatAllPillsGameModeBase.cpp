@@ -125,7 +125,7 @@ void AEatAllPillsGameModeBase::AllGhostsToBase() {
 		if (Ghost != nullptr) {
 			AGhostAIController* GhostController = Cast<AGhostAIController>(Ghost->GetController());
 			if (GhostController != nullptr) {
-				Ghost->SetActorLocation(GhostController->GetStartLocation());
+				GhostController->ReturnToStartLocation();
 			}
 		}
 	}

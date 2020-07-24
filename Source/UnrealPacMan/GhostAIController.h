@@ -29,6 +29,9 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	UPROPERTY(EditDefaultsOnly)
+	class UBehaviorTree* BehaviorTree;
+
 	APawn* PlayerPawn = nullptr;
 
 	class AGhostCharacter* ControlledGhost = nullptr;
