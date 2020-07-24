@@ -21,6 +21,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION(BlueprintPure)
+	int GetLivesRemaining();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -40,6 +43,8 @@ private:
 	void MoveUp(float AxisValue);
 
 	void MoveRight(float AxisValue);
+
+	void TogglePause();
 
 	void LoseALife();
 

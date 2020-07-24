@@ -8,6 +8,11 @@ void APacManPlayerController::BeginPlay() {
 	Super::BeginPlay();
 
 	StartLocation = GetPawn()->GetActorLocation();
+
+	UUserWidget* HudWidget = CreateWidget(this, HudClass);
+	if (HudWidget != nullptr) {
+		HudWidget->AddToViewport();
+	}
 }
 
 void APacManPlayerController::GameHasEnded(class AActor* EndGameFocus, bool bIsWinner) {
@@ -33,5 +38,16 @@ void APacManPlayerController::GameHasEnded(class AActor* EndGameFocus, bool bIsW
 
 void APacManPlayerController::ReturnToStartLocation() {
 	GetPawn()->SetActorLocation(StartLocation);
+}
+
+void APacManPlayerController::PauseGame() {
+	UUserWidget* PauseScreenWidget = CreateWidget(this, PauseScreenClass);
+	if (PauseScreenWidget != nullptr) {
+		PauseScreenWidget->AddToViewport();
+	}
+	
+	SetInputMode(FInputModeUIOnly());
+	bShowMouseCursor = true;
+	SetPause(true);
 }
 

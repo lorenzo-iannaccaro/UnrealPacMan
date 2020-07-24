@@ -49,11 +49,7 @@ void AEatAllPillsGameModeBase::PillEaten(APill* Pill) {
 
 	Pill->Destroy();
 
-	TArray<AActor*> PillArray;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), PillClass, PillArray);
-
-	UE_LOG(LogTemp, Warning, TEXT("Remaining pills: %d"), PillArray.Num());
-	if (PillArray.Num() <= 0) {
+	if (GetRemainingPillsCount() <= 0) {
 		UE_LOG(LogTemp, Warning, TEXT("All pills have been eaten"));
 		GameEnd(true);
 	}
@@ -118,4 +114,12 @@ void AEatAllPillsGameModeBase::AllGhostsToBase() {
 			}
 		}
 	}
+}
+
+int AEatAllPillsGameModeBase::GetRemainingPillsCount() {
+	TArray<AActor*> PillArray;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), PillClass, PillArray);
+	UE_LOG(LogTemp, Warning, TEXT("Remaining pills: %d"), PillArray.Num());
+
+	return PillArray.Num();
 }

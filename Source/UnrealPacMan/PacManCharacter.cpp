@@ -50,6 +50,8 @@ void APacManCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAxis(TEXT("MoveUp"), this, &APacManCharacter::MoveUp);
 	PlayerInputComponent->BindAxis(TEXT("MoveRight"), this, &APacManCharacter::MoveRight);
 
+	PlayerInputComponent->BindAction(TEXT("TogglePause"), IE_Pressed, this, &APacManCharacter::TogglePause);
+
 }
 
 void APacManCharacter::MoveUp(float AxisValue) {
@@ -58,6 +60,10 @@ void APacManCharacter::MoveUp(float AxisValue) {
 
 void APacManCharacter::MoveRight(float AxisValue) {
 	AddMovementInput(GetActorRightVector() * AxisValue);
+}
+
+void APacManCharacter::TogglePause() {
+	PacmanController->PauseGame();
 }
 
 void APacManCharacter::PacManOverlapped(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
@@ -104,4 +110,8 @@ void APacManCharacter::LoseALife() {
 
 bool APacManCharacter::NoLivesRemain() {
 	return CurrentLives <= 0;
+}
+
+int APacManCharacter::GetLivesRemaining() {
+	return CurrentLives;
 }

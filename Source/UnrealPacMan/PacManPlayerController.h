@@ -21,9 +21,17 @@ public:
 
 	void GameHasEnded(class AActor* EndGameFocus = nullptr, bool bIsWinner = false) override;
 
+	void PauseGame();
+
 private:
 	UPROPERTY(EditAnywhere)
 	float LevelRestartDelay = 3.0f;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class UUserWidget> HudClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class UUserWidget> PauseScreenClass;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UUserWidget> WinScreenClass;

@@ -20,6 +20,9 @@ public:
 
 	void AllGhostsToBase();
 
+	UFUNCTION(BlueprintPure)	
+	int GetRemainingPillsCount();
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class APill> PillClass;
 
