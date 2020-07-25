@@ -6,6 +6,7 @@
 #include "NavigationSystem.h"
 #include "GhostCharacter.h"
 #include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 void AGhostAIController::BeginPlay() {
 	Super::BeginPlay();
@@ -23,6 +24,10 @@ void AGhostAIController::BeginPlay() {
 		SetFocus(PlayerPawn);
 	}
 
+	if (BehaviorTree != nullptr) {
+		RunBehaviorTree(BehaviorTree);
+	}
+
 }
 
 void AGhostAIController::Tick(float DeltaTime) {
@@ -37,12 +42,25 @@ void AGhostAIController::Tick(float DeltaTime) {
 			MoveToActor(PlayerPawn, 0, false);
 		}*/
 		if (ControlledGhost->IsVulnerable()) {
-			BrainComponent->StopLogic(TEXT(""));
+			/*BrainComponent->StopLogic(TEXT(""));
+			MoveToLocation(StartLocation);*/
+			//GetBlackboardComponent()->ClearValue(TEXT("Pacman"));
+			BrainComponent->StopLogic(TEXT(""));	
 			MoveToLocation(StartLocation);
 		}
 		else {
 			if (BehaviorTree != nullptr) {
-				RunBehaviorTree(BehaviorTree);
+				if (!BrainComponent->IsRunning()) {
+					RunBehaviorTree(BehaviorTree);
+				}
+				
+			}
+
+			if (LineOfSightTo(PlayerPawn)) {
+				//GetBlackboardComponent()->SetValueAsObject(TEXT("Pacman"), PlayerPawn);
+			}
+			else {
+				//GetBlackboardComponent()->ClearValue(TEXT("Pacman"));
 			}
 		}
 	}
@@ -57,8 +75,13 @@ void AGhostAIController::RandomMove() {
 }
 
 void AGhostAIController::ReturnToStartLocation() {
+	
 	BrainComponent->StopLogic(TEXT(""));
 	ControlledGhost->SetActorLocation(StartLocation);
+	
+	/*if (BehaviorTree != nullptr) {
+		RunBehaviorTree(BehaviorTree);
+	}*/
 }
 
 void AGhostAIController::GameHasEnded(class AActor* EndGameFocus, bool bIsWinner) {

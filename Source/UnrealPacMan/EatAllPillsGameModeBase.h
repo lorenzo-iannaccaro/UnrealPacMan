@@ -45,6 +45,8 @@ private:
 
 	TArray<AActor*> GhostsArray;
 
+	TArray<AActor*> PillArray;
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class AGhostCharacter> GhostClass;
 
