@@ -32,6 +32,8 @@ public:
 
 	void ChangeColor();
 
+	void GiveTemporalDeathColor();
+
 private:
 
 	UPROPERTY(VisibleAnywhere)
@@ -46,9 +48,14 @@ private:
 	class UMaterial* GhostMaterial;
 
 	UPROPERTY(EditDefaultsOnly)
-	FVector WeakColor = FVector(1, 1, 1);
+	FColor WeakColor = FColor(0, 0, 255, 255);
+
+	UPROPERTY(EditDefaultsOnly)
+	FColor DeathColor = FColor(255, 255, 255, 0);
 
 	class UMaterialInstanceDynamic* WeakGhostMaterial;
+
+	class UMaterialInstanceDynamic* DeathGhostMaterial;
 	
 
 };

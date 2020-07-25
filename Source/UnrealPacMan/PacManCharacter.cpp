@@ -72,6 +72,8 @@ void APacManCharacter::PacManOverlapped(UPrimitiveComponent* OverlappedComponent
 	if (Ghost != nullptr) {
 		UE_LOG(LogTemp, Warning, TEXT("Ghost overlapped into Pacman"));
 		if (Ghost->IsVulnerable()) {
+
+			Ghost->GiveTemporalDeathColor();
 			AGhostAIController* GhostController = Cast<AGhostAIController>(Ghost->GetController());
 			if (GhostController != nullptr) {
 				//GhostController->ReturnToStartLocation();

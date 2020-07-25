@@ -34,6 +34,9 @@ void AGhostCharacter::BeginPlay()
 	// Color
 	WeakGhostMaterial = UMaterialInstanceDynamic::Create(GhostMesh->GetMaterial(0), NULL);
 	WeakGhostMaterial->SetVectorParameterValue(TEXT("Color"), WeakColor);
+
+	DeathGhostMaterial = UMaterialInstanceDynamic::Create(GhostMesh->GetMaterial(0), NULL);
+	DeathGhostMaterial->SetVectorParameterValue(TEXT("Color"), DeathColor);
 	
 }
 
@@ -66,5 +69,9 @@ void AGhostCharacter::ChangeColor() {
 	else {
 		GhostMesh->SetMaterial(0, GhostMaterial);
 	}
+}
+
+void AGhostCharacter::GiveTemporalDeathColor() {
+	GhostMesh->SetMaterial(0, DeathGhostMaterial);
 }
 
