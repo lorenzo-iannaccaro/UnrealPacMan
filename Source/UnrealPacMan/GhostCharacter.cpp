@@ -64,7 +64,11 @@ bool AGhostCharacter::IsVulnerable() {
 
 void AGhostCharacter::ChangeColor() {
 	if (IsVulnerable()) {
-		GhostMesh->SetMaterial(0, WeakGhostMaterial);
+		UMaterialInstance* MatInstance = Cast<UMaterialInstance>(GhostMesh->GetMaterial(0));
+		if (MatInstance == nullptr) {
+			GhostMesh->SetMaterial(0, WeakGhostMaterial);
+		}
+		
 	}
 	else {
 		GhostMesh->SetMaterial(0, GhostMaterial);
