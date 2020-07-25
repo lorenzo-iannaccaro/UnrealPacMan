@@ -64,8 +64,7 @@ bool AGhostCharacter::IsVulnerable() {
 
 void AGhostCharacter::ChangeColor() {
 	if (IsVulnerable()) {
-		UMaterialInstance* MatInstance = Cast<UMaterialInstance>(GhostMesh->GetMaterial(0));
-		if (MatInstance == nullptr) {
+		if (!IsEaten()) {
 			GhostMesh->SetMaterial(0, WeakGhostMaterial);
 		}
 		
@@ -77,5 +76,13 @@ void AGhostCharacter::ChangeColor() {
 
 void AGhostCharacter::GiveTemporalDeathColor() {
 	GhostMesh->SetMaterial(0, DeathGhostMaterial);
+}
+
+bool AGhostCharacter::IsEaten() {
+	return bIsEaten;
+}
+
+void AGhostCharacter::SetEaten(bool Value) {
+	bIsEaten = Value;
 }
 

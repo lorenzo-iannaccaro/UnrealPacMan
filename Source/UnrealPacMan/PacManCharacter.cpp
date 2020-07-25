@@ -73,6 +73,7 @@ void APacManCharacter::PacManOverlapped(UPrimitiveComponent* OverlappedComponent
 		UE_LOG(LogTemp, Warning, TEXT("Ghost overlapped into Pacman"));
 		if (Ghost->IsVulnerable()) {
 
+			Ghost->SetEaten(true);
 			Ghost->GiveTemporalDeathColor();
 			AGhostAIController* GhostController = Cast<AGhostAIController>(Ghost->GetController());
 			if (GhostController != nullptr) {
@@ -118,3 +119,4 @@ bool APacManCharacter::NoLivesRemain() {
 int APacManCharacter::GetLivesRemaining() {
 	return CurrentLives;
 }
+

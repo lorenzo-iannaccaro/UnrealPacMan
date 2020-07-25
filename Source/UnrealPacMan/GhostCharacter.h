@@ -30,11 +30,17 @@ public:
 
 	bool IsVulnerable();
 
+	bool IsEaten();
+
+	void SetEaten(bool Value);
+
 	void ChangeColor();
 
 	void GiveTemporalDeathColor();
 
 private:
+
+	bool bIsEaten = false;
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* GhostMesh;

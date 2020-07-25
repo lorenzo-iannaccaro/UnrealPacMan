@@ -48,7 +48,7 @@ void AEatAllPillsGameModeBase::PillEaten(APill* Pill) {
 	if (PillExamined != nullptr) {
 		UE_LOG(LogTemp, Warning, TEXT("POWER PILL EATEN"));
 
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), GhostClass, GhostsArray);
+		//UGameplayStatics::GetAllActorsOfClass(GetWorld(), GhostClass, GhostsArray);
 
 		// Effetti della pillola speciale - settare timer - ripristinare effetti a timer finito
 		WeakenGhosts();
@@ -121,8 +121,10 @@ void AEatAllPillsGameModeBase::StrenghtenGhosts() {
 		if (Actor != nullptr) {
 			AGhostCharacter* Ghost = Cast<AGhostCharacter>(Actor);
 			if (Ghost != nullptr) {
-				Ghost->SetVulnerability(false);
-				Ghost->ChangeColor();
+				if (!Ghost->IsEaten()) {
+					Ghost->SetVulnerability(false);
+					Ghost->ChangeColor();
+				}
 			}
 		}
 		
@@ -135,6 +137,7 @@ void AEatAllPillsGameModeBase::AllGhostsToBase() {
 	{
 		AGhostCharacter* Ghost = Cast<AGhostCharacter>(Actor);
 		if (Ghost != nullptr) {
+			Ghost->SetEaten(false);
 			AGhostAIController* GhostController = Cast<AGhostAIController>(Ghost->GetController());
 			if (GhostController != nullptr) {
 				GhostController->ReturnToStartLocation();
