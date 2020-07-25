@@ -20,7 +20,9 @@ void AEatAllPillsGameModeBase::BeginPlay() {
 
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), GhostClass, GhostsArray);
 
+	TArray<AActor*> PillArray;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), PillClass, PillArray);
+	RemainingPillsCount = PillArray.Num();
 }
 
 void AEatAllPillsGameModeBase::SetPacmanGameCamera()
@@ -38,6 +40,8 @@ void AEatAllPillsGameModeBase::SetPacmanGameCamera()
 
 void AEatAllPillsGameModeBase::PillEaten(APill* Pill) {
 	UE_LOG(LogTemp, Warning, TEXT("Game mode knows that a pill has been eaten"));
+
+	RemainingPillsCount--;
 
 	// Controllare se la pillola è speciale
 	APowerPill* PillExamined = Cast<APowerPill>(Pill);
@@ -142,7 +146,15 @@ void AEatAllPillsGameModeBase::AllGhostsToBase() {
 int AEatAllPillsGameModeBase::GetRemainingPillsCount() {
 	/*TArray<AActor*> PillArray;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), PillClass, PillArray);*/
-	UE_LOG(LogTemp, Warning, TEXT("Remaining pills: %d"), PillArray.Num());
+	
+	//UE_LOG(LogTemp, Warning, TEXT("Remaining pills: %d"), RemainingPillCount);
 
-	return PillArray.Num();
+	return RemainingPillsCount;
+}
+
+void AEatAllPillsGameModeBase::StrenghtenSingleGhost(AGhostCharacter* Ghost) {
+	if (Ghost != nullptr) {
+		Ghost->SetVulnerability(false);
+		Ghost->ChangeColor();
+	}
 }

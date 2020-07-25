@@ -16,4 +16,6 @@ class UNREALPACMAN_API AUnrealPacManGameModeBase : public AGameModeBase
 	
 public:
 	virtual void PillEaten(class APill* Pill);
+
+	virtual void StrenghtenSingleGhost(class AGhostCharacter* Ghost);
 };

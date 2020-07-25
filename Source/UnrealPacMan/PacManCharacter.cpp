@@ -74,7 +74,8 @@ void APacManCharacter::PacManOverlapped(UPrimitiveComponent* OverlappedComponent
 		if (Ghost->IsVulnerable()) {
 			AGhostAIController* GhostController = Cast<AGhostAIController>(Ghost->GetController());
 			if (GhostController != nullptr) {
-				GhostController->ReturnToStartLocation();
+				//GhostController->ReturnToStartLocation();
+				GhostController->MoveToStartLocation();
 			}
 			else {
 				UE_LOG(LogTemp, Error, TEXT("Ghost controller is nullptr"));
@@ -85,7 +86,7 @@ void APacManCharacter::PacManOverlapped(UPrimitiveComponent* OverlappedComponent
 		}
 	}
 	else {
-		UE_LOG(LogTemp, Error, TEXT("Ghost overlapped into Pacman is nullptr"));
+		UE_LOG(LogTemp, Warning, TEXT("Pacman overlapped with a non ghost actor"));
 	}
 }
 

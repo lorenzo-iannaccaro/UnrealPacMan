@@ -45,8 +45,9 @@ void AGhostAIController::Tick(float DeltaTime) {
 			/*BrainComponent->StopLogic(TEXT(""));
 			MoveToLocation(StartLocation);*/
 			//GetBlackboardComponent()->ClearValue(TEXT("Pacman"));
-			BrainComponent->StopLogic(TEXT(""));	
-			MoveToLocation(StartLocation);
+
+			//BrainComponent->StopLogic(TEXT(""));	
+			//MoveToLocation(StartLocation);
 		}
 		else {
 			if (BehaviorTree != nullptr) {
@@ -93,4 +94,9 @@ void AGhostAIController::GameHasEnded(class AActor* EndGameFocus, bool bIsWinner
 
 FVector AGhostAIController::GetStartLocation() {
 	return StartLocation;
+}
+
+void AGhostAIController::MoveToStartLocation() {
+	BrainComponent->StopLogic(TEXT(""));
+	MoveTo(StartLocation);
 }

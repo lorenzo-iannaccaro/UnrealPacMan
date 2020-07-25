@@ -16,6 +16,8 @@ class UNREALPACMAN_API AEatAllPillsGameModeBase : public AUnrealPacManGameModeBa
 public:
 	virtual void PillEaten(APill* Pill) override;
 
+	virtual void StrenghtenSingleGhost(AGhostCharacter* Ghost) override;
+
 	void PacmanPermadeath();
 
 	void AllGhostsToBase();
@@ -45,7 +47,7 @@ private:
 
 	TArray<AActor*> GhostsArray;
 
-	TArray<AActor*> PillArray;
+	int RemainingPillsCount;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class AGhostCharacter> GhostClass;

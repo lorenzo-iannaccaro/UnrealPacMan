@@ -33,6 +33,7 @@ public:
 	void ChangeColor();
 
 private:
+
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* GhostMesh;
 
