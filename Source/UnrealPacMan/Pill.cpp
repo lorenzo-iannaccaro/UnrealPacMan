@@ -5,6 +5,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "PacManCharacter.h"
 #include "UnrealPacManGameModeBase.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APill::APill()
@@ -47,6 +48,7 @@ void APill::PillOverlapped(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	{
 		AUnrealPacManGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AUnrealPacManGameModeBase>();
 		if (GameMode != nullptr) {
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), PillEatenSfx, GetActorLocation());
 			GameMode->PillEaten(this);
 		}
 

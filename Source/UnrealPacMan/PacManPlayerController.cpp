@@ -3,6 +3,7 @@
 #include "PacManPlayerController.h"
 #include "Blueprint/UserWidget.h"
 #include "TimerManager.h"
+#include "Kismet/GameplayStatics.h"
 
 void APacManPlayerController::BeginPlay() {
 	Super::BeginPlay();
@@ -22,12 +23,14 @@ void APacManPlayerController::GameHasEnded(class AActor* EndGameFocus, bool bIsW
 		UUserWidget* WinScreenWidget = CreateWidget(this, WinScreenClass);
 		if (WinScreenWidget != nullptr) {
 			WinScreenWidget->AddToViewport();
+			UGameplayStatics::PlaySound2D(GetWorld(), WinSfx);
 		}
 	}
 	else {
 		UUserWidget* LoseScreenWidget = CreateWidget(this, LoseScreenClass);
 		if (LoseScreenWidget != nullptr) {
 			LoseScreenWidget->AddToViewport();
+			UGameplayStatics::PlaySound2D(GetWorld(), LoseSfx);
 		}
 	}
 

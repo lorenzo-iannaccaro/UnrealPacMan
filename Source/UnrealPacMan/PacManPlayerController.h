@@ -25,7 +25,13 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere)
-	float LevelRestartDelay = 3.0f;
+	float LevelRestartDelay = 5.0f;
+
+	UPROPERTY(EditDefaultsOnly)
+	USoundBase* WinSfx;
+
+	UPROPERTY(EditDefaultsOnly)
+	USoundBase* LoseSfx;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UUserWidget> HudClass;

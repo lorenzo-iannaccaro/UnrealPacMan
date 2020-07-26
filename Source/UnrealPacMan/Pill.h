@@ -30,6 +30,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* PillMesh;
+
+	UPROPERTY(EditDefaultsOnly)
+	USoundBase* PillEatenSfx;
 	
 
 };

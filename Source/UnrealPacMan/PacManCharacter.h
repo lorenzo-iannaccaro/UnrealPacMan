@@ -35,6 +35,12 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	int CurrentLives;
 
+	UPROPERTY(EditDefaultsOnly)
+	USoundBase* LoseLifeSfx;
+
+	UPROPERTY(EditDefaultsOnly)
+	USoundBase* EatGhostSfx;
+
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* PacmanMesh;
 

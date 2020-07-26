@@ -6,6 +6,7 @@
 #include "EatAllPillsGameModeBase.h"
 #include "PacManPlayerController.h"
 #include "GhostAIController.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APacManCharacter::APacManCharacter()
@@ -73,6 +74,8 @@ void APacManCharacter::PacManOverlapped(UPrimitiveComponent* OverlappedComponent
 		UE_LOG(LogTemp, Warning, TEXT("Ghost overlapped into Pacman"));
 		if (GhostOverlapped->IsVulnerable()) {
 
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), EatGhostSfx, GetActorLocation());
+
 			GhostOverlapped->SetEaten(true);
 			GhostOverlapped->GiveTemporalDeathColor();
 			if (GhostOverlapped != nullptr) {
@@ -102,6 +105,8 @@ void APacManCharacter::LoseALife() {
 	AEatAllPillsGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AEatAllPillsGameModeBase>();
 
 	CurrentLives--;
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), LoseLifeSfx, GetActorLocation());
+
 	PacmanController->ReturnToStartLocation();
 	GameMode->AllGhostsToBase();
 
