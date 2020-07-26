@@ -9,7 +9,7 @@
 AGhostCharacter::AGhostCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	GhostMesh = CreateDefaultSubobject<UStaticMeshComponent>("Ghost Body");
 	GhostMesh->SetupAttachment(GetRootComponent());
@@ -32,20 +32,13 @@ void AGhostCharacter::BeginPlay()
 	bIsVulnerable = false;
 	bIsEaten = false;
 
-	// Init material instances
+	// Init ghost material instances
 	WeakGhostMaterial = UMaterialInstanceDynamic::Create(GhostMesh->GetMaterial(0), NULL);
 	WeakGhostMaterial->SetVectorParameterValue(TEXT("Color"), WeakColor);
 
 	DeathGhostMaterial = UMaterialInstanceDynamic::Create(GhostMesh->GetMaterial(0), NULL);
 	DeathGhostMaterial->SetVectorParameterValue(TEXT("Color"), DeathColor);
 	
-}
-
-// Called every frame
-void AGhostCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
@@ -55,12 +48,20 @@ void AGhostCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 }
 
+bool AGhostCharacter::IsVulnerable() {
+	return bIsVulnerable;
+}
+
 void AGhostCharacter::SetVulnerability(bool bValue) {
 	bIsVulnerable = bValue;
 }
 
-bool AGhostCharacter::IsVulnerable() {
-	return bIsVulnerable;
+bool AGhostCharacter::IsEaten() {
+	return bIsEaten;
+}
+
+void AGhostCharacter::SetEaten(bool Value) {
+	bIsEaten = Value;
 }
 
 void AGhostCharacter::ChangeColor() {
@@ -79,11 +80,5 @@ void AGhostCharacter::GiveTemporalDeathColor() {
 	GhostMesh->SetMaterial(0, DeathGhostMaterial);
 }
 
-bool AGhostCharacter::IsEaten() {
-	return bIsEaten;
-}
 
-void AGhostCharacter::SetEaten(bool Value) {
-	bIsEaten = Value;
-}
 

@@ -15,9 +15,6 @@ void AGhostAIController::BeginPlay() {
 	if (ControlledGhost != nullptr) {
 		StartLocation = ControlledGhost->GetActorLocation();
 	}
-	else {
-		UE_LOG(LogTemp, Error, TEXT("Cannot possess Ghost"));
-	}
 
 	PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 
@@ -60,6 +57,7 @@ FVector AGhostAIController::GetStartLocation() {
 	return StartLocation;
 }
 
+// Follow the best path to start location
 void AGhostAIController::MoveToStartLocation() {
 	BrainComponent->StopLogic(TEXT(""));
 	MoveTo(StartLocation);

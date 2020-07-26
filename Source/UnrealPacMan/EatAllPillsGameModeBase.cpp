@@ -39,16 +39,15 @@ void AEatAllPillsGameModeBase::SetPacmanGameCamera()
 }
 
 void AEatAllPillsGameModeBase::PillEaten(APill* Pill) {
-	UE_LOG(LogTemp, Warning, TEXT("Game mode knows that a pill has been eaten"));
 
+	UE_LOG(LogTemp, Warning, TEXT("Game mode knows that a pill has been eaten"));
 	RemainingPillsCount--;
 
-	// Controllare se la pillola è speciale
+	// Control if power pill
 	APowerPill* PillExamined = Cast<APowerPill>(Pill);
 	if (PillExamined != nullptr) {
-		UE_LOG(LogTemp, Warning, TEXT("POWER PILL EATEN"));
 
-		// Effetti della pillola speciale - settare timer - ripristinare effetti a timer finito
+		UE_LOG(LogTemp, Warning, TEXT("POWER PILL EATEN"));
 		WeakenGhosts();
 		
 	}
@@ -96,6 +95,7 @@ void AEatAllPillsGameModeBase::WeakenGhosts() {
 		}
 	}
 
+	// Set the timer for ghosts' weakness
 	GetWorldTimerManager().SetTimer(TimerHandle, this, &AEatAllPillsGameModeBase::StrenghtenGhosts, PowerPillEffectDurationInSeconds, false);
 
 }
@@ -118,6 +118,7 @@ void AEatAllPillsGameModeBase::StrenghtenGhosts() {
 	
 }
 
+// Teleports all ghosts to their start location
 void AEatAllPillsGameModeBase::AllGhostsToBase() {
 	for (AActor* Actor : GhostsArray)
 	{

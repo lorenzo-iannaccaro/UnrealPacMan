@@ -14,8 +14,6 @@ class UNREALPACMAN_API APill : public AActor
 public:	
 	// Sets default values for this actor's properties
 	APill();
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 protected:
 	// Called when the game starts or when spawned

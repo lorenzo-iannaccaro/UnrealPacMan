@@ -12,7 +12,7 @@
 APacManCharacter::APacManCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	PacmanMesh = CreateDefaultSubobject<UStaticMeshComponent>("Pacman Body");
 	PacmanMesh->SetupAttachment(GetRootComponent());
@@ -35,12 +35,8 @@ void APacManCharacter::BeginPlay()
 	
 }
 
-// Called every frame
-void APacManCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-
+int APacManCharacter::GetLivesRemaining() {
+	return CurrentLives;
 }
 
 // Called to bind functionality to input
@@ -74,18 +70,7 @@ void APacManCharacter::PacManOverlapped(UPrimitiveComponent* OverlappedComponent
 		UE_LOG(LogTemp, Warning, TEXT("Ghost overlapped into Pacman"));
 		if (GhostOverlapped->IsVulnerable()) {
 
-			UGameplayStatics::PlaySoundAtLocation(GetWorld(), EatGhostSfx, GetActorLocation());
-
-			GhostOverlapped->SetEaten(true);
-			GhostOverlapped->GiveTemporalDeathColor();
-			
-			AGhostAIController* GhostController = Cast<AGhostAIController>(GhostOverlapped->GetController());
-			if (GhostController != nullptr) {
-				GhostController->MoveToStartLocation();
-			}
-			else {
-				UE_LOG(LogTemp, Error, TEXT("Ghost controller is nullptr"));
-			}
+			EatGhost();
 		}
 		else {
 			LoseALife();
@@ -96,12 +81,26 @@ void APacManCharacter::PacManOverlapped(UPrimitiveComponent* OverlappedComponent
 	}
 }
 
+void APacManCharacter::EatGhost()
+{
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), EatGhostSfx, GetActorLocation());
+	GhostOverlapped->SetEaten(true);
+	GhostOverlapped->GiveTemporalDeathColor();
+
+	AGhostAIController* GhostController = Cast<AGhostAIController>(GhostOverlapped->GetController());
+	if (GhostController != nullptr) {
+		GhostController->MoveToStartLocation();
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("Ghost controller is nullptr"));
+	}
+}
+
 void APacManCharacter::LoseALife() {
 	AEatAllPillsGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AEatAllPillsGameModeBase>();
 
 	CurrentLives--;
 	UGameplayStatics::PlaySoundAtLocation(GetWorld(), LoseLifeSfx, GetActorLocation());
-
 	PacmanController->ReturnToStartLocation();
 	GameMode->AllGhostsToBase();
 
@@ -121,7 +120,4 @@ bool APacManCharacter::NoLivesRemain() {
 	return CurrentLives <= 0;
 }
 
-int APacManCharacter::GetLivesRemaining() {
-	return CurrentLives;
-}
 
