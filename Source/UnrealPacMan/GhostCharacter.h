@@ -39,16 +39,8 @@ public:
 	void GiveTemporalDeathColor();
 
 private:
-
-	bool bIsEaten = false;
-
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* GhostMesh;
-
-	UPROPERTY(EditDefaultsOnly)
-	float MaxGhostSpeed = 300.0f;
-
-	bool bIsVulnerable;
 
 	UPROPERTY(EditAnywhere)
 	class UMaterial* GhostMaterial;
@@ -64,6 +56,12 @@ private:
 
 	UPROPERTY()
 	class UMaterialInstanceDynamic* DeathGhostMaterial;
+
+	UPROPERTY(EditDefaultsOnly)
+	float MaxGhostSpeed = 300.0f;
 	
+	bool bIsEaten;
+
+	bool bIsVulnerable;
 
 };

@@ -19,8 +19,6 @@ APill::APill()
 	PillMesh = CreateDefaultSubobject<UStaticMeshComponent>("Pill Body");
 	PillMesh->SetupAttachment(Root);
 
-	
-
 }
 
 // Called when the game starts or when spawned
@@ -40,8 +38,6 @@ void APill::Tick(float DeltaTime)
 }
 
 void APill::PillOverlapped(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
-
-	//UE_LOG(LogTemp, Warning, TEXT("%s overlapped"), *GetName());
 
 	APacManCharacter* PacmanPlayer = Cast<APacManCharacter>(OtherActor);
 	if (PacmanPlayer != nullptr)

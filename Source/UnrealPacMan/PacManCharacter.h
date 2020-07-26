@@ -49,6 +49,9 @@ private:
 
 	class APacManPlayerController* PacmanController;
 
+	UFUNCTION()
+	void PacManOverlapped(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 	void MoveUp(float AxisValue);
 
 	void MoveRight(float AxisValue);
@@ -58,8 +61,5 @@ private:
 	void LoseALife();
 
 	bool NoLivesRemain();
-
-	UFUNCTION()
-	void PacManOverlapped(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 };

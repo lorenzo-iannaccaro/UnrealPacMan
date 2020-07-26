@@ -14,6 +14,15 @@ class UNREALPACMAN_API AEatAllPillsGameModeBase : public AUnrealPacManGameModeBa
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class APill> PillClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AGameCamera> GameCameraClass;
+
+	UFUNCTION(BlueprintPure)
+	int GetRemainingPillsCount();
+
 	virtual void PillEaten(APill* Pill) override;
 
 	virtual void StrenghtenSingleGhost(AGhostCharacter* Ghost) override;
@@ -22,21 +31,17 @@ public:
 
 	void AllGhostsToBase();
 
-	UFUNCTION(BlueprintPure)	
-	int GetRemainingPillsCount();
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class APill> PillClass;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AGameCamera> GameCameraClass;
-
 protected:
 	virtual void BeginPlay() override;
 
 	void SetPacmanGameCamera();
 
 private:
+	UPROPERTY()
+	TArray<AActor*> GhostsArray;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class AGhostCharacter> GhostClass;
 
 	UPROPERTY(EditDefaultsOnly)
 	float PowerPillEffectDurationInSeconds = 10.0f;
@@ -45,13 +50,7 @@ private:
 
 	AGameCamera* GameCamera;
 
-	UPROPERTY()
-	TArray<AActor*> GhostsArray;
-
 	int RemainingPillsCount;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class AGhostCharacter> GhostClass;
 
 	void GameEnd(bool bIsWin);
 

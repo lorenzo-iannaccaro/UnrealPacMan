@@ -30,8 +30,9 @@ void AGhostCharacter::BeginPlay()
 	}
 
 	bIsVulnerable = false;
+	bIsEaten = false;
 
-	// Color
+	// Init material instances
 	WeakGhostMaterial = UMaterialInstanceDynamic::Create(GhostMesh->GetMaterial(0), NULL);
 	WeakGhostMaterial->SetVectorParameterValue(TEXT("Color"), WeakColor);
 

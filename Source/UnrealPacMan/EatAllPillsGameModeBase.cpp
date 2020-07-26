@@ -48,8 +48,6 @@ void AEatAllPillsGameModeBase::PillEaten(APill* Pill) {
 	if (PillExamined != nullptr) {
 		UE_LOG(LogTemp, Warning, TEXT("POWER PILL EATEN"));
 
-		//UGameplayStatics::GetAllActorsOfClass(GetWorld(), GhostClass, GhostsArray);
-
 		// Effetti della pillola speciale - settare timer - ripristinare effetti a timer finito
 		WeakenGhosts();
 		
@@ -88,36 +86,17 @@ void AEatAllPillsGameModeBase::PacmanPermadeath() {
 
 void AEatAllPillsGameModeBase::WeakenGhosts() {
 
-	/*for (AActor* Actor : GhostsArray)
-	{
-		if (Actor != nullptr) {
-			AGhostCharacter* Ghost = Cast<AGhostCharacter>(Actor);
+	for (int i = 0; i < GhostsArray.Num(); i++) {
+		if (GhostsArray[i] != nullptr) {
+			AGhostCharacter* Ghost = Cast<AGhostCharacter>(GhostsArray[i]);
 			if (Ghost != nullptr) {
 				Ghost->SetVulnerability(true);
 				Ghost->ChangeColor();
 			}
 		}
-	}*/
-	if (GhostsArray.Num() > 0) {
-
-		for (int i = 0; i < GhostsArray.Num(); i++) {
-			if (GhostsArray.IsValidIndex(i)) {
-				if (GhostsArray[i] != nullptr) {
-					AGhostCharacter* Ghost = Cast<AGhostCharacter>(GhostsArray[i]);
-					if (Ghost != nullptr) {
-						Ghost->SetVulnerability(true);
-						Ghost->ChangeColor();
-					}
-				}
-			}
-			else {
-				UE_LOG(LogTemp, Error, TEXT("Invalid GhostsArray index"));
-			}
-		}
-
-		GetWorldTimerManager().SetTimer(TimerHandle, this, &AEatAllPillsGameModeBase::StrenghtenGhosts, PowerPillEffectDurationInSeconds, false);
 	}
-	
+
+	GetWorldTimerManager().SetTimer(TimerHandle, this, &AEatAllPillsGameModeBase::StrenghtenGhosts, PowerPillEffectDurationInSeconds, false);
 
 }
 
@@ -154,11 +133,6 @@ void AEatAllPillsGameModeBase::AllGhostsToBase() {
 }
 
 int AEatAllPillsGameModeBase::GetRemainingPillsCount() {
-	/*TArray<AActor*> PillArray;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), PillClass, PillArray);*/
-	
-	//UE_LOG(LogTemp, Warning, TEXT("Remaining pills: %d"), RemainingPillCount);
-
 	return RemainingPillsCount;
 }
 

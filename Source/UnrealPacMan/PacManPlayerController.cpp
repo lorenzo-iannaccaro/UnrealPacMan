@@ -47,10 +47,11 @@ void APacManPlayerController::PauseGame() {
 	UUserWidget* PauseScreenWidget = CreateWidget(this, PauseScreenClass);
 	if (PauseScreenWidget != nullptr) {
 		PauseScreenWidget->AddToViewport();
+
+		SetInputMode(FInputModeUIOnly());
+		bShowMouseCursor = true;
+		SetPause(true);
 	}
 	
-	SetInputMode(FInputModeUIOnly());
-	bShowMouseCursor = true;
-	SetPause(true);
 }
 

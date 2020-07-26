@@ -78,18 +78,13 @@ void APacManCharacter::PacManOverlapped(UPrimitiveComponent* OverlappedComponent
 
 			GhostOverlapped->SetEaten(true);
 			GhostOverlapped->GiveTemporalDeathColor();
-			if (GhostOverlapped != nullptr) {
-				AGhostAIController* GhostController = Cast<AGhostAIController>(GhostOverlapped->GetController());
-				if (GhostController != nullptr) {
-					//GhostController->ReturnToStartLocation();
-					GhostController->MoveToStartLocation();
-				}
-				else {
-					UE_LOG(LogTemp, Error, TEXT("Ghost controller is nullptr"));
-				}
+			
+			AGhostAIController* GhostController = Cast<AGhostAIController>(GhostOverlapped->GetController());
+			if (GhostController != nullptr) {
+				GhostController->MoveToStartLocation();
 			}
 			else {
-				UE_LOG(LogTemp, Error, TEXT("Ghost is nullptr after pointer has been dereferenced"));
+				UE_LOG(LogTemp, Error, TEXT("Ghost controller is nullptr"));
 			}
 		}
 		else {

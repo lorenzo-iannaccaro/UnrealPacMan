@@ -23,8 +23,6 @@ public:
 
 	void MoveToStartLocation();
 
-	void RandomMove();
-
 	void GameHasEnded(class AActor* EndGameFocus = nullptr, bool bIsWinner = false) override;
 
 protected:
