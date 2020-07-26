@@ -45,6 +45,7 @@ private:
 
 	AGameCamera* GameCamera;
 
+	UPROPERTY()
 	TArray<AActor*> GhostsArray;
 
 	int RemainingPillsCount;

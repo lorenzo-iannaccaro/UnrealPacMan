@@ -59,8 +59,10 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	FColor DeathColor = FColor(255, 255, 255, 0);
 
+	UPROPERTY()
 	class UMaterialInstanceDynamic* WeakGhostMaterial;
 
+	UPROPERTY()
 	class UMaterialInstanceDynamic* DeathGhostMaterial;
 	
 

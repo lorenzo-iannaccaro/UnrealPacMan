@@ -38,6 +38,9 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* PacmanMesh;
 
+	UPROPERTY()
+	class AGhostCharacter* GhostOverlapped;
+
 	class APacManPlayerController* PacmanController;
 
 	void MoveUp(float AxisValue);

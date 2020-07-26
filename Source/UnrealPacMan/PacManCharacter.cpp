@@ -68,20 +68,25 @@ void APacManCharacter::TogglePause() {
 
 void APacManCharacter::PacManOverlapped(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 
-	AGhostCharacter* Ghost = Cast<AGhostCharacter>(OtherActor);
-	if (Ghost != nullptr) {
+	GhostOverlapped = Cast<AGhostCharacter>(OtherActor);
+	if (GhostOverlapped != nullptr) {
 		UE_LOG(LogTemp, Warning, TEXT("Ghost overlapped into Pacman"));
-		if (Ghost->IsVulnerable()) {
+		if (GhostOverlapped->IsVulnerable()) {
 
-			Ghost->SetEaten(true);
-			Ghost->GiveTemporalDeathColor();
-			AGhostAIController* GhostController = Cast<AGhostAIController>(Ghost->GetController());
-			if (GhostController != nullptr) {
-				//GhostController->ReturnToStartLocation();
-				GhostController->MoveToStartLocation();
+			GhostOverlapped->SetEaten(true);
+			GhostOverlapped->GiveTemporalDeathColor();
+			if (GhostOverlapped != nullptr) {
+				AGhostAIController* GhostController = Cast<AGhostAIController>(GhostOverlapped->GetController());
+				if (GhostController != nullptr) {
+					//GhostController->ReturnToStartLocation();
+					GhostController->MoveToStartLocation();
+				}
+				else {
+					UE_LOG(LogTemp, Error, TEXT("Ghost controller is nullptr"));
+				}
 			}
 			else {
-				UE_LOG(LogTemp, Error, TEXT("Ghost controller is nullptr"));
+				UE_LOG(LogTemp, Error, TEXT("Ghost is nullptr after pointer has been dereferenced"));
 			}
 		}
 		else {

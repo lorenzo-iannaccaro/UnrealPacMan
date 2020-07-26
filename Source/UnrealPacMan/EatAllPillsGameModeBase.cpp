@@ -52,7 +52,6 @@ void AEatAllPillsGameModeBase::PillEaten(APill* Pill) {
 
 		// Effetti della pillola speciale - settare timer - ripristinare effetti a timer finito
 		WeakenGhosts();
-		GetWorldTimerManager().SetTimer(TimerHandle, this, &AEatAllPillsGameModeBase::StrenghtenGhosts, PowerPillEffectDurationInSeconds, false);
 		
 	}
 
@@ -102,14 +101,21 @@ void AEatAllPillsGameModeBase::WeakenGhosts() {
 	if (GhostsArray.Num() > 0) {
 
 		for (int i = 0; i < GhostsArray.Num(); i++) {
-			if (GhostsArray[i] != nullptr) {
-				AGhostCharacter* Ghost = Cast<AGhostCharacter>(GhostsArray[i]);
-				if (Ghost != nullptr) {
-					Ghost->SetVulnerability(true);
-					Ghost->ChangeColor();
+			if (GhostsArray.IsValidIndex(i)) {
+				if (GhostsArray[i] != nullptr) {
+					AGhostCharacter* Ghost = Cast<AGhostCharacter>(GhostsArray[i]);
+					if (Ghost != nullptr) {
+						Ghost->SetVulnerability(true);
+						Ghost->ChangeColor();
+					}
 				}
 			}
+			else {
+				UE_LOG(LogTemp, Error, TEXT("Invalid GhostsArray index"));
+			}
 		}
+
+		GetWorldTimerManager().SetTimer(TimerHandle, this, &AEatAllPillsGameModeBase::StrenghtenGhosts, PowerPillEffectDurationInSeconds, false);
 	}
 	
 
@@ -123,6 +129,7 @@ void AEatAllPillsGameModeBase::StrenghtenGhosts() {
 			if (Ghost != nullptr) {
 				if (!Ghost->IsEaten()) {
 					Ghost->SetVulnerability(false);
+					Ghost->SetEaten(false);
 					Ghost->ChangeColor();
 				}
 			}
@@ -158,6 +165,7 @@ int AEatAllPillsGameModeBase::GetRemainingPillsCount() {
 void AEatAllPillsGameModeBase::StrenghtenSingleGhost(AGhostCharacter* Ghost) {
 	if (Ghost != nullptr) {
 		Ghost->SetVulnerability(false);
+		Ghost->SetEaten(false);
 		Ghost->ChangeColor();
 	}
 }

@@ -21,7 +21,7 @@ void AGhostAIController::BeginPlay() {
 
 	PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 	if (PlayerPawn != nullptr) {
-		SetFocus(PlayerPawn);
+		//SetFocus(PlayerPawn);
 	}
 
 	if (BehaviorTree != nullptr) {
